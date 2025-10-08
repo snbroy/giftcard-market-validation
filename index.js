@@ -72,18 +72,19 @@ app.post('/apps/validate-gift-card', async (req, res) => {
     }
 
     const metafieldsData = await metafieldsRes.json();
-
+    console.log(metafieldsData)
     const allowedMarketField = metafieldsData.metafields?.find(
-      (m) => m.namespace === 'custom' && m.key === 'allow_market'
+      (m) => m.namespace === 'custom' && m.key === 'allowed_market'
     );
 
     if (!allowedMarketField) {
+      console.log(allowedMarketField)
       console.warn(`No allow_market metafield found for product ${productId}`);
-      return res.json({ allowedMarket: 'US' }); // default fallback
+      return res.json({ giftcard: false }); // default fallback
     }
 
     console.log('Found allow_market metafield:', allowedMarketField.value);
-    res.json({ allowedMarket: allowedMarketField.value });
+    res.json({ giftcard:true,allowedMarket: allowedMarketField.value });
 
   } catch (err) {
     console.error('Unexpected error in /validate-gift-card:', err);
