@@ -32,6 +32,10 @@ if (!SHOPIFY_ADMIN_TOKEN || !STORE_DOMAIN) {
   process.exit(1);
 }
 
+app.get('/', (req, res) => {
+    res.send('Shopify App Proxy is running.');
+});
+
 // -----------------------------
 // App Proxy Endpoint
 // -----------------------------
