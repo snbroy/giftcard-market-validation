@@ -43,9 +43,11 @@ app.get('/', (req, res) => {
  * GET /apps/validate-gift-card?productId=<PRODUCT_ID>
  * Returns the allowed_market metafield of a product.
  */
-app.get('/apps/validate-gift-card', async (req, res) => {
+app.post('/apps/validate-gift-card', async (req, res) => {
   try {
-    const productId = req.body.productId;
+    const productGid = req.body.productId; //"gid://shopify/Product/8377106792644"
+    const productId = productGid.split('/').pop(); // Extract numeric ID
+
     if (!productId) {
       return res.status(400).json({ error: 'Missing productId query parameter' });
     }
